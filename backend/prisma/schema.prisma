@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Document {
+  id          String   @id @default(uuid())
+  name        String   // The original file name (e.g., "Q1_Report.pdf")
+  s3Key       String   @unique // The unique path/identifier in AWS S3 bucket
+  size        Int      // File size in bytes
+  mimeType    String   // e.g., "application/pdf", "image/png"
+  
+  // Multi-tenancy & Auth (Clerk references)
+  orgId       String   // Clerk Organization ID (This is Tenant ID)
+  uploaderId  String   // Clerk User ID of the person who uploaded it
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Indexing orgId makes querying documents for a specific tenant incredibly fast
+  @@index([orgId]) 
+}
