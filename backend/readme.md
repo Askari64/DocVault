@@ -1,3 +1,12 @@
+## 📝 Roadmap / TODO
+
+- [] Add Clerk Middleware
+- [] Setup IAM user
+- [] Setup AWS S3 presigned POST URL
+- [] Setup AWS S3 presigned GET URL
+- [] Setup AWS S3 presigned POST URL
+- [] Add Version Control
+
 ## Setup Instructions
 
 ### Prerequisites
