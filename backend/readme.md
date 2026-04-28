@@ -1,6 +1,8 @@
 ## 📝 Roadmap / TODO
 
-- [] Add Clerk Middleware
+- [x] Add Clerk Middleware
+- [x] Get Clerk API Key
+- [] Protect routes using getAuth() https://clerk.com/docs/expressjs/getting-started/quickstart https://clerk.com/docs/reference/express/get-auth checkout clerk client for express reference - WIP
 - [] Setup IAM user
 - [] Setup AWS S3 presigned POST URL
 - [] Setup AWS S3 presigned GET URL
