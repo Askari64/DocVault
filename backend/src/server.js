@@ -22,11 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 //4. Authentication Middleware (Clerk Middleware will go here)
-
+app.use(clerkMiddleware())
 //5. API Routes will go here
 //WIP
 // Use `getAuth()` to protect a route based on authentication status
-app.get('/protected', clerkMiddleware ,(req, res) => {
+app.get('/protected' ,(req, res) => {
   const auth = getAuth(req)
 
   if (!auth.isAuthenticated) {
