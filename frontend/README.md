@@ -1,7 +1,8 @@
 ## 📝 Roadmap / TODO
 
 - [x] Add Clerk
-- [] Setup Orgs / Multi-tenancy
+- [x] Setup Orgs / Multi-tenancy
+- [x] Add Navbar
 
 ## Frontend Setup Instructions
 
