@@ -2,16 +2,24 @@
 
 - [x] Add Clerk Middleware
 - [x] Get Clerk API Key
-- [x] Protect routes using getAuth() https://clerk.com/docs/expressjs/getting-started/quickstart https://clerk.com/docs/reference/express/get-auth checkout clerk client for express reference
+- [x] Protect routes using getAuth()
 - [x] Setup S3 bucket and policy
 - [x] Setup IAM user
-- [] Setup AWS S3 presigned POST URL
+- [] Setup AWS S3 presigned POST URL 
 - [] Setup AWS S3 presigned GET URL
 - [] Setup AWS S3 presigned POST URL
 - [] Add object delete policy to IAM user
 - [] Build Delete object functionality
 - [] Add Version Control
 - [] Change bucket CORS policy later to live frontend url
+
+## References
+
+- https://clerk.com/docs/expressjs/getting-started/quickstart 
+- https://clerk.com/docs/reference/express/get-auth
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html 
+- https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-s3-request-presigner/ 
+- https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-s3-presigned-post/
 
 ## Setup Instructions
 
