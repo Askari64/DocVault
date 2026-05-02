@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { connectDB, disconnectDB } from "./config/db.js";
 import { clerkMiddleware, clerkClient, getAuth } from "@clerk/express"
+import S3FileAccessRoutes from "./routes/S3FileAccessRoutes.js"
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -24,7 +25,9 @@ app.use(express.urlencoded());
 //4. Authentication Middleware (Clerk Middleware will go here)
 app.use(clerkMiddleware())
 //5. API Routes will go here
-//WIP
+
+app.use("/api/S3FileAccess", S3FileAccessRoutes);
+
 // Use `getAuth()` to protect a route based on authentication status
 app.get('/protected' ,(req, res) => {
   const auth = getAuth(req)
