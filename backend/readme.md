@@ -5,9 +5,9 @@
 - [x] Protect routes using getAuth()
 - [x] Setup S3 bucket and policy
 - [x] Setup IAM user
-- [] Setup AWS S3 presigned POST URL 
+- [x] Setup AWS S3 presigned POST URL 
+- [] Implement Document saving in DB after upload
 - [] Setup AWS S3 presigned GET URL
-- [] Setup AWS S3 presigned POST URL
 - [] Add object delete policy to IAM user
 - [] Build Delete object functionality
 - [] Add Version Control
