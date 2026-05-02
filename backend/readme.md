@@ -6,7 +6,7 @@
 - [x] Setup S3 bucket and policy
 - [x] Setup IAM user
 - [x] Setup AWS S3 presigned POST URL 
-- [] Implement Document saving in DB after upload
+- [x] Implement Document saving in DB after upload
 - [] Setup AWS S3 presigned GET URL
 - [] Add object delete policy to IAM user
 - [] Build Delete object functionality
