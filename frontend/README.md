@@ -3,6 +3,10 @@
 - [x] Add Clerk
 - [x] Setup Orgs / Multi-tenancy
 - [x] Add Navbar
+- [] Add Upload Page
+- [] Add Upload functionality
+- [] Add Listing of Org docs
+- [] Add Download functionality
 
 ## Frontend Setup Instructions
 
