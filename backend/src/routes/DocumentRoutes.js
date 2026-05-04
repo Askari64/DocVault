@@ -4,7 +4,7 @@ import { saveDocument } from "../controllers/DocumentController.js";
 
 const router = new express.Router();
 
-appendFile.use(requireAuth());
+router.use(requireAuth());
 
 // Route: POST /api/documents
 // Triggered ONLY after the frontend successfully uploads to S3
