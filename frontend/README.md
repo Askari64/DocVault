@@ -3,8 +3,9 @@
 - [x] Add Clerk
 - [x] Setup Orgs / Multi-tenancy
 - [x] Add Navbar
-- [] Add Upload Page
-- [] Add Upload functionality
+- [x] Add Upload Page
+- [x] Add Upload functionality
+- [] Refactor Uploader
 - [] Add Listing of Org docs
 - [] Add Download functionality
 
