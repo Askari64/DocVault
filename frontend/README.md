@@ -5,9 +5,12 @@
 - [x] Add Navbar
 - [x] Add Upload Page
 - [x] Add Upload functionality
-- [] Refactor Uploader
+- [] Refactor Uploader with tanstackQuery hook
 - [] Add Listing of Org docs
 - [] Add Download functionality
+- [] Add Delete functionality
+- [] Add Protected Routes Utility
+- [] Add ScrollToTop Utility
 
 ## Frontend Setup Instructions
 
