@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 import DocumentList from "./pages/DocumentList";
 import Uploader from "./pages/Uploader";
+import ProtectedRoute from "./utils/ProtectedRoutes";
 
 function App() {
   return (
@@ -11,8 +12,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route element={<ProtectedRoute/>}>
         <Route path="/documents" element={<DocumentList />} />
         <Route path="/upload" element={<Uploader />} />
+        </Route>
         {/* 404-Not Found Page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
