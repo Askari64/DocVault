@@ -5,12 +5,13 @@
 - [x] Add Navbar
 - [x] Add Upload Page
 - [x] Add Upload functionality
-- [] Refactor Uploader with tanstackQuery hook
+- [x] Refactor Uploader with tanstackQuery hook
 - [] Add Listing of Org docs
 - [] Add Download functionality
 - [] Add Delete functionality
-- [] Add Protected Routes Utility
-- [] Add ScrollToTop Utility
+- [x] Add Protected Routes Utility
+- [] Store user isSignedIn in store for immediate rerouting
+- [x] Add ScrollToTop Utility
 
 ## Frontend Setup Instructions
 
