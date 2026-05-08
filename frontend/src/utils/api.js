@@ -1,9 +1,9 @@
 // src/utils/api.js
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function api(endpoint, options = {}) {
-  const url = `${API_BASE}${endpoint}`;
+  const url = `${API_BASE_URL}${endpoint}`;
 
   // Extract token from options if it exists, so we can build the Authorization header
   const { token, ...customOptions } = options;
