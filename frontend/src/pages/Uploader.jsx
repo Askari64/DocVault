@@ -9,7 +9,8 @@ function Uploader() {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const uploadMutation = useDocumentUpload({
-    onSuccess: () => {
+    onSuccess: (response) => {
+      alert(`Success! File ID ${response.document.id} named ${response.document.name} is safe.`);
       setSelectedFile(null);
       navigate("/documents");
     },
