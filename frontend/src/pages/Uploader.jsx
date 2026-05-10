@@ -4,7 +4,6 @@ import { useDocumentUpload } from "../hooks/useDocumentUpload";
 import {
   UploadCloud,
   File as FileIcon,
-  AlertCircle,
   Loader2,
   X,
 } from "lucide-react";
