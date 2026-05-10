@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import DocumentList from "./pages/DocumentList";
 import Uploader from "./pages/Uploader";
 import ProtectedRoute from "./utils/ProtectedRoutes";
+import { Toaster } from "@/components/ui/sonner"
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         {/* 404-Not Found Page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+
+      <Toaster position="top-center" richColors />
     </>
   );
 }
