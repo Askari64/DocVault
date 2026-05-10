@@ -52,10 +52,28 @@ export const saveDocument = async (req, res) => {
 };
 
 export const listDocuments = async (req, res) => {
- /*
- Check user is authenticated and belonging to an organization
- Check if user is requesting from current organization
- Fetch all documents from user's correct current organization
- Return Documents
-  */
+  try {
+    // Verify User and organization from clerk
+    const auth = getAuth(req);
+
+    if (!auth.userId) {
+      return res.status(401).json({ error: "Unauthorised" });
+    }
+
+    if (!auth.orgId) {
+      return res.status(403).json({ error: "Organization Required" });
+    }
+
+    const allDocuments = await prisma.document.findMany({
+      where: { orgId: auth.orgId },
+    });
+
+    return res.status(200).json({
+      status: "success",
+      data: allDocuments,
+    });
+  } catch (error) {
+    console.error("Error fetching documents from DB:", error);
+    return res.status(500).json({ error: "Failed to fetch documents form DB" });
+  }
 };
