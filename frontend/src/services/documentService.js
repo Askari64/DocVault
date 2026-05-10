@@ -41,4 +41,14 @@ export const documentService = {
       body: JSON.stringify({ ...fileDetails, s3Key }),
     });
   },
+
+  // =========================================================
+  //  Get All Documents (Uses API Wrapper)
+  // =========================================================
+  getDocuments: async (token) => {
+    return await api("/documents", {
+      method: "GET",
+      token: token,
+    });
+  },
 };
