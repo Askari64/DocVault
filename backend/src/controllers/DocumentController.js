@@ -66,6 +66,9 @@ export const listDocuments = async (req, res) => {
 
     const allDocuments = await prisma.document.findMany({
       where: { orgId: auth.orgId },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return res.status(200).json({
