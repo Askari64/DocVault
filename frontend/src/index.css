@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@keyframes eye-move {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-10px, -10px);
+  }
+  50% {
+    transform: translate(10px, 10px);
+  }
+  75% {
+    transform: translate(-10px, 10px);
+  }
+}
+
+.animate-eye-move {
+  animation: eye-move 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-eye-move {
+    animation: none;
+  }
+}
