@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { saveDocument } from "../controllers/DocumentController.js";
+import { listDocuments, saveDocument } from "../controllers/DocumentController.js";
 
 const router = new express.Router();
 
@@ -7,5 +7,8 @@ const router = new express.Router();
 // Route: POST /api/documents
 // Triggered ONLY after the frontend successfully uploads to S3
 router.post("/", saveDocument);
+
+// Route: GET /api/documents
+router.get("/", listDocuments);
 
 export default router;

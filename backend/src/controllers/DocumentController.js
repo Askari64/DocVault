@@ -50,3 +50,12 @@ export const saveDocument = async (req, res) => {
     return res.status(500).json({ error: "Failed to save document record." });
   }
 };
+
+export const listDocuments = async (req, res) => {
+ /*
+ Check user is authenticated and belonging to an organization
+ Check if user is requesting from current organization
+ Fetch all documents from user's correct current organization
+ Return Documents
+  */
+};
