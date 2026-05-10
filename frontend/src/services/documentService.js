@@ -51,4 +51,14 @@ export const documentService = {
       token: token,
     });
   },
+
+  // =========================================================
+  // Download Selected Document (Uses API Wrapper)
+  // =========================================================
+  downloadDocument: async (token) => {
+    return await api("/S3FileAccess/download-url", {
+      method: "POST",
+      token: token,
+    });
+  },
 };
