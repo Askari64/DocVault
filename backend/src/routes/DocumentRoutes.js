@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { listDocuments, saveDocument } from "../controllers/DocumentController.js";
+import { deleteDocument, listDocuments, saveDocument } from "../controllers/DocumentController.js";
 
 const router = new express.Router();
 
@@ -10,5 +10,8 @@ router.post("/", saveDocument);
 
 // Route: GET /api/documents
 router.get("/", listDocuments);
+
+// Route: DELETE /api/documents
+router.delete("/:id", deleteDocument);
 
 export default router;

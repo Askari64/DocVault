@@ -80,3 +80,38 @@ export const listDocuments = async (req, res) => {
     return res.status(500).json({ error: "Failed to fetch documents form DB" });
   }
 };
+
+export const deleteDocument = async (req, res) => {
+  try {
+    const auth = getAuth(req);
+
+    if (!auth.userId) return res.status(401).json({ error: "Unauthorized" });
+    if (!auth.orgId) return res.status(403).json({ error: "Organization Required" });
+
+    const documentId = req.params.id;
+
+    // 1. Fetch the document to ensure it belongs to this organization
+    const document = await prisma.document.findUnique({
+      where: { id: documentId },
+    });
+
+    if (!document) {
+      return res.status(404).json({ error: "Document not found." });
+    }
+
+    // Security Check: Prevent deleting another organization's records
+    if (document.orgId !== auth.orgId) {
+      return res.status(403).json({ error: "Access Denied." });
+    }
+
+    // 2. Delete the record from Neon Database
+    await prisma.document.delete({
+      where: { id: documentId },
+    });
+
+    return res.status(200).json({ message: "Database record deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting document record:", error);
+    return res.status(500).json({ error: "Failed to delete database record." });
+  }
+};
