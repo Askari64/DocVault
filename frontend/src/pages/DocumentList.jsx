@@ -1,5 +1,6 @@
 import { useAuth, useOrganization } from "@clerk/react";
 import { useDocuments } from "../hooks/useDocuments";
+import { useDocumentDownload } from "@/hooks/useDocumentDownload";
 import { Link } from "react-router";
 import { 
   FileText, 
@@ -10,6 +11,9 @@ import {
   Loader2, 
   AlertCircle 
 } from "lucide-react";
+
+import formatDate from "@/utils/formatDates";
+import formatBytes from "@/utils/formatBytes";
 
 // Shadcn UI Imports
 import {
@@ -27,24 +31,13 @@ export default function DocumentList() {
   const { organization } = useOrganization();
   
   const { data: documents, isLoading, isError, error } = useDocuments();
+  const downloadMutation = useDocumentDownload();
 
-  // Helper function to make file sizes readable
-  const formatBytes = (bytes) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
-  // Helper function to format dates nicely
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
+  const handleDownload = (s3Key, name, id) =>  downloadMutation.mutate({ 
+                        s3Key: s3Key, 
+                        fileName: name,
+                        id: id // We pass the ID just for the loading UI logic
+                      })
 
   // 1. Handle "No Organization Selected" state
   if (!orgId) {
@@ -173,11 +166,21 @@ export default function DocumentList() {
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 disabled:opacity-50"
                       title="Download"
+                      // Disable the button while THIS specific file is downloading
+                      disabled={downloadMutation.isPending} 
+                      onClick={() => handleDownload(doc.s3Key, doc.name, doc.id)}
                     >
-                      <Download className="w-4 h-4" />
+                      {/* UI Polish: Show a spinner ONLY on the button that was clicked */}
+                      {downloadMutation.isPending && downloadMutation.variables?.id === doc.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Download className="w-4 h-4" />
+                      )}
                     </Button>
+
+                    {/* Delete Button (Unchanged for now) */}
                     <Button 
                       variant="ghost" 
                       size="icon" 
@@ -186,6 +189,7 @@ export default function DocumentList() {
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
+                    
                   </div>
                 </TableCell>
 
