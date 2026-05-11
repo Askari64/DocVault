@@ -61,4 +61,25 @@ export const documentService = {
       body: JSON.stringify({ s3Key }),
     });
   },
+
+  // =========================================================
+  // Delete from AWS S3
+  // =========================================================
+  deleteFromS3: async (s3Key, token) => {
+    return await api("/S3FileAccess/delete-file", {
+      method: "POST",
+      token: token,
+      body: JSON.stringify({ s3Key }),
+    });
+  },
+
+  // =========================================================
+  // Delete from Database
+  // =========================================================
+  deleteFromDatabase: async (id, token) => {
+    return await api(`/documents/${id}`, {
+      method: "DELETE",
+      token: token,
+    });
+  },
 };
