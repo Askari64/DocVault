@@ -1,4 +1,3 @@
-// src/services/documentService.js
 import { api } from "../utils/api";
 
 export const documentService = {
@@ -55,10 +54,11 @@ export const documentService = {
   // =========================================================
   // Download Selected Document (Uses API Wrapper)
   // =========================================================
-  downloadDocument: async (token) => {
+  downloadDocument: async (s3Key, token) => {
     return await api("/S3FileAccess/download-url", {
-      method: "POST",
+      method: "POST", // POST is correct because we are sending a body
       token: token,
+      body: JSON.stringify({ s3Key }),
     });
   },
 };
