@@ -14,3 +14,5 @@
 - [x] Add ScrollToTop Utility
 - [] Add RBAC for deletion - Only Admin can delete. 
 - [] Add my files page - user may delete their own files.
+- [] Add Pagination when listing
+- [] Add Search Docs functionality on listing
