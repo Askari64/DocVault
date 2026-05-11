@@ -2,6 +2,7 @@ import s3ClientInstance from "../config/S3ClientInstance.js";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 import { getAuth } from "@clerk/express";
 import { error } from "node:console";
@@ -114,5 +115,38 @@ export const generateDownloadUrl = async (req, res) => {
     return res
       .status(500)
       .json({ error: "Failed to generate secure download URL." });
+  }
+};
+
+export const deleteS3File = async (req, res) => {
+  try {
+    const auth = getAuth(req);
+
+    if (!auth.userId) return res.status(401).json({ error: "Unauthorized" });
+    if (!auth.orgId) return res.status(403).json({ error: "Organization Required" });
+
+    const { s3Key } = req.body;
+
+    if (!s3Key) {
+      return res.status(400).json({ error: "s3Key is required for deletion." });
+    }
+
+    // Security Check: Users can only delete files inside their own organization's folder
+    if (!s3Key.startsWith(`organizations/${auth.orgId}/`)) {
+      return res.status(403).json({ error: "Access Denied: Cannot delete outside your workspace." });
+    }
+
+    // Tell AWS to delete the physical file
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: s3Key,
+    });
+
+    await s3ClientInstance.send(command);
+
+    return res.status(200).json({ message: "File securely removed from AWS S3." });
+  } catch (error) {
+    console.error("Error deleting file from S3:", error);
+    return res.status(500).json({ error: "Failed to delete file from cloud storage." });
   }
 };
