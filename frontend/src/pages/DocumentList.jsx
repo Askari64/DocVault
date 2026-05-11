@@ -1,15 +1,16 @@
 import { useAuth, useOrganization } from "@clerk/react";
 import { useDocuments } from "../hooks/useDocuments";
 import { useDocumentDownload } from "@/hooks/useDocumentDownload";
+import { useDocumentDelete } from "@/hooks/useDocumentDelete";
 import { Link } from "react-router";
-import { 
-  FileText, 
-  Download, 
-  Trash2, 
-  Plus, 
-  FolderOpen, 
-  Loader2, 
-  AlertCircle 
+import {
+  FileText,
+  Download,
+  Trash2,
+  Plus,
+  FolderOpen,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 
 import formatDate from "@/utils/formatDates";
@@ -29,22 +30,33 @@ import { Button } from "@/components/ui/button";
 export default function DocumentList() {
   const { orgId } = useAuth();
   const { organization } = useOrganization();
-  
+
   const { data: documents, isLoading, isError, error } = useDocuments();
   const downloadMutation = useDocumentDownload();
+  const deleteMutation = useDocumentDelete();
 
-  const handleDownload = (s3Key, name, id) =>  downloadMutation.mutate({ 
-                        s3Key: s3Key, 
-                        fileName: name,
-                        id: id // We pass the ID just for the loading UI logic
-                      })
+  const handleDownload = (s3Key, name, id) =>
+    downloadMutation.mutate({
+      s3Key: s3Key,
+      fileName: name,
+      id: id, // We pass the ID just for the loading UI logic
+    });
+
+  const handleDelete = (s3Key, name, id) =>
+    deleteMutation.mutate({
+      s3Key: s3Key,
+      fileName: name,
+      id: id,
+    });
 
   // 1. Handle "No Organization Selected" state
   if (!orgId) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-gray-500">
         <FolderOpen className="w-12 h-12 mb-4 text-gray-300" />
-        <h2 className="text-lg font-medium">Please select an organization to view your documents.</h2>
+        <h2 className="text-lg font-medium">
+          Please select an organization to view your documents.
+        </h2>
       </div>
     );
   }
@@ -54,7 +66,9 @@ export default function DocumentList() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-gray-500">
         <Loader2 className="w-8 h-8 mb-4 animate-spin text-blue-500" />
-        <p className="text-sm font-medium animate-pulse">Loading your secure workspace...</p>
+        <p className="text-sm font-medium animate-pulse">
+          Loading your secure workspace...
+        </p>
       </div>
     );
   }
@@ -79,9 +93,12 @@ export default function DocumentList() {
         <div className="p-4 bg-gray-50 rounded-full mb-4">
           <FolderOpen className="w-8 h-8 text-gray-400" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-1">No documents found</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-1">
+          No documents found
+        </h3>
         <p className="text-gray-500 mb-6 text-sm text-center max-w-sm">
-          Your organization's workspace is currently empty. Upload a file to get started.
+          Your organization's workspace is currently empty. Upload a file to get
+          started.
         </p>
         <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
           <Link to="/upload">
@@ -96,18 +113,22 @@ export default function DocumentList() {
   // 5. Success State: Render the Shadcn Table
   return (
     <div className="max-w-6xl mx-auto mt-10 p-5 font-sans">
-      
       {/* Header Section */}
       <div className="flex justify-between items-end mb-6">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-            {organization?.name ? `${organization.name} Vault` : "Organization Documents"}
+            {organization?.name
+              ? `${organization.name} Vault`
+              : "Organization Documents"}
           </h2>
           <p className="text-sm text-gray-500 mt-1">
             Manage and securely download your team's files.
           </p>
         </div>
-        <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm">
+        <Button
+          asChild
+          className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+        >
           <Link to="/upload">
             <Plus className="w-4 h-4 mr-2" />
             Upload File
@@ -120,17 +141,29 @@ export default function DocumentList() {
         <Table>
           <TableHeader className="bg-gray-50/80">
             <TableRow className="hover:bg-transparent">
-              <TableHead className="w-100 font-semibold text-gray-600">File Name</TableHead>
-              <TableHead className="font-semibold text-gray-600">Size</TableHead>
-              <TableHead className="font-semibold text-gray-600">Type</TableHead>
-              <TableHead className="font-semibold text-gray-600">Uploaded</TableHead>
-              <TableHead className="text-right font-semibold text-gray-600">Actions</TableHead>
+              <TableHead className="w-100 font-semibold text-gray-600">
+                File Name
+              </TableHead>
+              <TableHead className="font-semibold text-gray-600">
+                Size
+              </TableHead>
+              <TableHead className="font-semibold text-gray-600">
+                Type
+              </TableHead>
+              <TableHead className="font-semibold text-gray-600">
+                Uploaded
+              </TableHead>
+              <TableHead className="text-right font-semibold text-gray-600">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {documents.map((doc) => (
-              <TableRow key={doc.id} className="hover:bg-gray-50/50 transition-colors">
-                
+              <TableRow
+                key={doc.id}
+                className="hover:bg-gray-50/50 transition-colors"
+              >
                 {/* Name Column with Icon */}
                 <TableCell className="font-medium text-gray-900">
                   <div className="flex items-center gap-3">
@@ -142,38 +175,41 @@ export default function DocumentList() {
                     </span>
                   </div>
                 </TableCell>
-                
+
                 {/* Size Column */}
                 <TableCell className="text-gray-500 text-sm">
                   {formatBytes(doc.size)}
                 </TableCell>
-                
+
                 {/* Type Column (Stylized Badge) */}
                 <TableCell>
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 uppercase tracking-wider">
-                    {doc.mimeType.split('/')[1] || 'FILE'}
+                    {doc.mimeType.split("/")[1] || "FILE"}
                   </span>
                 </TableCell>
-                
+
                 {/* Date Column */}
                 <TableCell className="text-gray-500 text-sm">
                   {formatDate(doc.createdAt)}
                 </TableCell>
-                
+
                 {/* Actions Column (Icon Buttons) */}
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-1">
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 disabled:opacity-50"
                       title="Download"
                       // Disable the button while THIS specific file is downloading
-                      disabled={downloadMutation.isPending} 
-                      onClick={() => handleDownload(doc.s3Key, doc.name, doc.id)}
+                      disabled={downloadMutation.isPending}
+                      onClick={() =>
+                        handleDownload(doc.s3Key, doc.name, doc.id)
+                      }
                     >
                       {/* UI Polish: Show a spinner ONLY on the button that was clicked */}
-                      {downloadMutation.isPending && downloadMutation.variables?.id === doc.id ? (
+                      {downloadMutation.isPending &&
+                      downloadMutation.variables?.id === doc.id ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         <Download className="w-4 h-4" />
@@ -181,18 +217,18 @@ export default function DocumentList() {
                     </Button>
 
                     {/* Delete Button (Unchanged for now) */}
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                       title="Delete"
+                      disabled={deleteMutation.isPending}
+                      onClick={() => handleDelete(doc.s3Key, doc.name, doc.id)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
-                    
                   </div>
                 </TableCell>
-
               </TableRow>
             ))}
           </TableBody>
