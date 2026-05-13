@@ -28,7 +28,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function DocumentList() {
-  const { orgId } = useAuth();
+  const { orgId, userId, has } = useAuth();
   const { organization } = useOrganization();
 
   const { data: documents, isLoading, isError, error } = useDocuments();
@@ -42,12 +42,11 @@ export default function DocumentList() {
       id: id, // We pass the ID just for the loading UI logic
     });
 
-  const handleDelete = (s3Key, name, id) =>
-    deleteMutation.mutate({
-      s3Key: s3Key,
-      fileName: name,
-      id: id,
-    });
+const handleDelete = (id, s3Key, name) => {
+    if (window.confirm(`Are you sure you want to permanently delete "${name}"?`)) {
+      deleteMutation.mutate({ id, s3Key }); 
+    }
+  };
 
   // 1. Handle "No Organization Selected" state
   if (!orgId) {
@@ -216,17 +215,31 @@ export default function DocumentList() {
                       )}
                     </Button>
 
-                    {/* Delete Button (Unchanged for now) */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                      title="Delete"
-                      disabled={deleteMutation.isPending}
-                      onClick={() => handleDelete(doc.s3Key, doc.name, doc.id)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                    {/* RBAC LOGIC: Use has() to check roles cleanly */}
+                    {(doc.uploaderId === userId ||
+                      has({ role: "org:admin" }) ||
+                      has({ role: "org:owner" })) && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 disabled:opacity-50"
+                        title="Delete"
+                        disabled={
+                          deleteMutation.isPending &&
+                          deleteMutation.variables?.id === doc.id
+                        }
+                        onClick={() =>
+                          handleDelete(doc.id, doc.s3Key, doc.name)
+                        }
+                      >
+                        {deleteMutation.isPending &&
+                        deleteMutation.variables?.id === doc.id ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="w-4 h-4" />
+                        )}
+                      </Button>
+                    )}
                   </div>
                 </TableCell>
               </TableRow>
