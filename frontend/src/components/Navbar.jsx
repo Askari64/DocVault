@@ -1,4 +1,6 @@
 import AuthGroup from "./AuthGroup";
+import { Show } from "@clerk/react";
+import { Link } from "react-router";
 
 function Navbar() {
   return (
@@ -8,6 +10,14 @@ function Navbar() {
         <div className="flex items-center gap-2">
           <span className="text-xl font-semibold tracking-tight">DocVault</span>
         </div>
+
+        {/* Center: Hyperlinks*/}
+        <Show when="signed-in">
+          <div className="flex gap-5">
+            <Link to="/documents">Documents</Link>
+            <Link to="/upload">Upload</Link>
+          </div>
+        </Show>
 
         {/* Right: Auth */}
         <AuthGroup />
