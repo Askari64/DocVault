@@ -16,20 +16,20 @@
 
 ### Installation
 
-# Clone repository
+### Clone repository
 git clone <your-repo-url>
 cd into backend folder
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Configure environment
+### Configure environment
 cp .env.example .env
-# Edit .env with your credentials
+Edit .env with your credentials
 
-# Initialize database
+### Initialize database
 npx prisma generate
 npx prisma db push
 
-# Start server
+### Start server
 npm run dev
