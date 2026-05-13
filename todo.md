@@ -15,7 +15,7 @@
 - [x] Add ScrollToTop Utility
 - [] Store user isSignedIn in store for immediate rerouting
 - [x] Add RBAC for deletion - Only Admin and Uploader can see delete button. 
-- [] Add my files page - user may delete their own files.
+- [] Add my files page - user may see their own files.
 - [] Add Pagination when listing
 - [] Add Search Docs functionality on listing
 
