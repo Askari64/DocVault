@@ -4,6 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
+import { prisma } from "../config/db.js";
 import { getAuth } from "@clerk/express";
 import { error } from "node:console";
 
@@ -89,12 +90,9 @@ export const generateDownloadUrl = async (req, res) => {
     // Security Check: verify user is downloading from correct organization
 
     if (!s3Key.startsWith(`organizations/${auth.orgId}/`)) {
-      return res
-        .status(403)
-        .json({
-          error:
-            "Access Denied: You cannot access files outside your workspace.",
-        });
+      return res.status(403).json({
+        error: "Access Denied: You cannot access files outside your workspace.",
+      });
     }
 
     // Create a command asking AWS for a file
@@ -123,7 +121,8 @@ export const deleteS3File = async (req, res) => {
     const auth = getAuth(req);
 
     if (!auth.userId) return res.status(401).json({ error: "Unauthorized" });
-    if (!auth.orgId) return res.status(403).json({ error: "Organization Required" });
+    if (!auth.orgId)
+      return res.status(403).json({ error: "Organization Required" });
 
     const { s3Key } = req.body;
 
@@ -133,7 +132,29 @@ export const deleteS3File = async (req, res) => {
 
     // Security Check: Users can only delete files inside their own organization's folder
     if (!s3Key.startsWith(`organizations/${auth.orgId}/`)) {
-      return res.status(403).json({ error: "Access Denied: Cannot delete outside your workspace." });
+      return res
+        .status(403)
+        .json({
+          error: "Access Denied: Cannot delete outside your workspace.",
+        });
+    }
+
+    // Security Check 2: Only Uploader and Admin can delete files
+    const document = await prisma.document.findFirst({
+      where: { s3Key: s3Key },
+    });
+
+    if (!document) {
+      return res.status(404).json({ error: "File record not found." });
+    }
+
+    const isUploader = document.uploaderId == auth.userId;
+    const isAdmin = auth.has({ role: "org:admin" });
+
+    if (!isUploader && !isAdmin) {
+      return res
+        .status(403)
+        .json({ error: "only uploader or admin can delete this record" });
     }
 
     // Tell AWS to delete the physical file
@@ -144,9 +165,13 @@ export const deleteS3File = async (req, res) => {
 
     await s3ClientInstance.send(command);
 
-    return res.status(200).json({ message: "File securely removed from AWS S3." });
+    return res
+      .status(200)
+      .json({ message: "File securely removed from AWS S3." });
   } catch (error) {
     console.error("Error deleting file from S3:", error);
-    return res.status(500).json({ error: "Failed to delete file from cloud storage." });
+    return res
+      .status(500)
+      .json({ error: "Failed to delete file from cloud storage." });
   }
 };

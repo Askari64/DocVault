@@ -86,7 +86,8 @@ export const deleteDocument = async (req, res) => {
     const auth = getAuth(req);
 
     if (!auth.userId) return res.status(401).json({ error: "Unauthorized" });
-    if (!auth.orgId) return res.status(403).json({ error: "Organization Required" });
+    if (!auth.orgId)
+      return res.status(403).json({ error: "Organization Required" });
 
     const documentId = req.params.id;
 
@@ -104,12 +105,24 @@ export const deleteDocument = async (req, res) => {
       return res.status(403).json({ error: "Access Denied." });
     }
 
+    // Security Check 2: Only Uploader and Admin can delete files
+    const isUploader = document.uploaderId == auth.userId;
+    const isAdmin = auth.has({ role: "org:admin" });
+
+    if (!isUploader && !isAdmin) {
+      return res
+        .status(403)
+        .json({ error: "only uploader or admin can delete this record" });
+    }
+
     // 2. Delete the record from Neon Database
     await prisma.document.delete({
       where: { id: documentId },
     });
 
-    return res.status(200).json({ message: "Database record deleted successfully." });
+    return res
+      .status(200)
+      .json({ message: "Database record deleted successfully." });
   } catch (error) {
     console.error("Error deleting document record:", error);
     return res.status(500).json({ error: "Failed to delete database record." });
