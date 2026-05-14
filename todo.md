@@ -19,6 +19,7 @@
 - [] Add Pagination when listing
 - [] Add Search Docs functionality on listing
 - [x] Add Landing Page
+- [] Make it responsive
 
 ## Backend
 
