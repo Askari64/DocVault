@@ -1,6 +1,9 @@
-import AuthGroup from "./AuthGroup";
 import { Show } from "@clerk/react";
+import AuthAppLink from "./AuthAppLink";
+import AuthGroup from "./AuthGroup";
 import { Link } from "react-router";
+
+const landingHash = (id) => ({ pathname: "/", hash: id });
 
 function Navbar() {
   return (
@@ -15,13 +18,28 @@ function Navbar() {
           </Link>
         </div>
 
-        {/* Center: Hyperlinks*/}
-        <Show when="signed-in">
-          <div className="flex gap-5">
-            <Link to="/documents">Documents</Link>
-            <Link to="/upload">Upload</Link>
-          </div>
-        </Show>
+        <div className="flex max-w-full flex-1 flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-muted-foreground sm:gap-x-6 sm:text-sm">
+          <Show when="signed-out">
+            <>
+              <Link to={landingHash("features")} className="transition hover:text-foreground">
+                Features
+              </Link>
+              <Link to={landingHash("pricing")} className="transition hover:text-foreground">
+                Pricing
+              </Link>
+            </>
+          </Show>
+          <Show when="signed-in">
+            <>
+              <AuthAppLink to="/documents" className="transition hover:text-foreground">
+                Documents
+              </AuthAppLink>
+              <AuthAppLink to="/upload" className="transition hover:text-foreground">
+                Upload
+              </AuthAppLink>
+            </>
+          </Show>
+        </div>
 
         {/* Right: Auth */}
         <AuthGroup />
