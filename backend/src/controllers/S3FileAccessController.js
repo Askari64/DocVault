@@ -1,4 +1,4 @@
-import s3ClientInstance from "../config/S3ClientInstance.js";
+import s3ClientInstance from "../config/s3ClientInstance.js";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
