@@ -18,7 +18,7 @@
 - [] Add my files page - user may see their own files.
 - [] Add Pagination when listing
 - [] Add Search Docs functionality on listing
-- [] Add Landing Page
+- [x] Add Landing Page
 
 ## Backend
 
