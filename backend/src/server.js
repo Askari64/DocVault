@@ -24,6 +24,7 @@ app.use(
       "POST",
       "PATCH",
       "DELETE",
+      "OPTIONS",
     ] /*Allowing only these methods */,
     credentials: true /*Allowing cookies */,
   }),
