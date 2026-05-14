@@ -23,7 +23,11 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
       <ScrollToTop/>
         <ErrorBoundary>
-          <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+          <ClerkProvider
+            publishableKey={PUBLISHABLE_KEY}
+            signInForceRedirectUrl="/documents"
+            signUpForceRedirectUrl="/documents"
+            afterSignOutUrl="/">
             <App />
           </ClerkProvider>
         </ErrorBoundary>
