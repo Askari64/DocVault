@@ -1,8 +1,10 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons"
-import { Link } from "react-router"
 
+import AuthAppLink from "@/components/AuthAppLink"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+
+const bentoCtaClassName =
+  "pointer-events-auto inline-flex items-center gap-1 p-0 text-sm font-medium text-primary underline-offset-4 hover:underline"
 
 const BentoGrid = ({
   children,
@@ -55,12 +57,10 @@ const BentoCard = ({
         className={cn(
           "pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:hidden"
         )}>
-        <Button variant="link" asChild size="sm" className="pointer-events-auto p-0">
-          <Link to={href}>
-            {cta}
-            <ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" />
-          </Link>
-        </Button>
+        <AuthAppLink to={href} className={bentoCtaClassName}>
+          {cta}
+          <ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" />
+        </AuthAppLink>
       </div>
     </div>
 
@@ -68,12 +68,10 @@ const BentoCard = ({
       className={cn(
         "pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex"
       )}>
-      <Button variant="link" asChild size="sm" className="pointer-events-auto p-0">
-        <Link to={href}>
-          {cta}
-          <ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" />
-        </Link>
-      </Button>
+      <AuthAppLink to={href} className={bentoCtaClassName}>
+        {cta}
+        <ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" />
+      </AuthAppLink>
     </div>
 
     <div

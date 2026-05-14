@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from "react"
+import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
@@ -62,20 +62,25 @@ export function DotPattern({
     return () => window.removeEventListener("resize", updateDimensions);
   }, [])
 
-  const dots = Array.from({
-    length:
-      Math.ceil(dimensions.width / width) *
-      Math.ceil(dimensions.height / height),
-  }, (_, i) => {
-    const col = i % Math.ceil(dimensions.width / width)
-    const row = Math.floor(i / Math.ceil(dimensions.width / width))
-    return {
-      x: col * width + cx + x,
-      y: row * height + cy + y,
-      delay: Math.random() * 5,
-      duration: Math.random() * 3 + 2,
-    };
-  })
+  const dots = useMemo(() => {
+    const cols = Math.max(1, Math.ceil(dimensions.width / width))
+    const rows = Math.max(1, Math.ceil(dimensions.height / height))
+    const count = cols * rows
+    const jitter = (seed) => {
+      const t = Math.sin(seed * 12.9898) * 43758.5453
+      return t - Math.floor(t)
+    }
+    return Array.from({ length: count }, (_, i) => {
+      const col = i % cols
+      const row = Math.floor(i / cols)
+      return {
+        x: col * width + cx + x,
+        y: row * height + cy + y,
+        delay: jitter(i + col * 3) * 5,
+        duration: 2 + jitter(i + row * 5) * 3,
+      }
+    })
+  }, [dimensions.width, dimensions.height, width, height, cx, cy, x, y])
 
   return (
     <svg
@@ -92,34 +97,31 @@ export function DotPattern({
           <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
         </radialGradient>
       </defs>
-      {dots.map((dot) => (
-        <motion.circle
-          key={`${dot.x}-${dot.y}`}
-          cx={dot.x}
-          cy={dot.y}
-          r={cr}
-          fill={glow ? `url(#${id}-gradient)` : "currentColor"}
-          initial={glow ? { opacity: 0.4, scale: 1 } : {}}
-          animate={
-            glow
-              ? {
-                  opacity: [0.4, 1, 0.4],
-                  scale: [1, 1.5, 1],
-                }
-              : {}
-          }
-          transition={
-            glow
-              ? {
-                  duration: dot.duration,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  delay: dot.delay,
-                  ease: "easeInOut",
-                }
-              : {}
-          } />
-      ))}
+      {dots.map((dot) =>
+        glow ? (
+          <motion.circle
+            key={`${dot.x}-${dot.y}`}
+            cx={dot.x}
+            cy={dot.y}
+            r={cr}
+            fill={`url(#${id}-gradient)`}
+            initial={{ opacity: 0.4, scale: 1 }}
+            animate={{
+              opacity: [0.4, 1, 0.4],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: dot.duration,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: dot.delay,
+              ease: "easeInOut",
+            }}
+          />
+        ) : (
+          <circle key={`${dot.x}-${dot.y}`} cx={dot.x} cy={dot.y} r={cr} fill="currentColor" />
+        )
+      )}
     </svg>
   );
 }
