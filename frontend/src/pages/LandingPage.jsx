@@ -88,7 +88,7 @@ function LandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="h-11 rounded-xl bg-white text-zinc-900 hover:bg-zinc-100"
+                className="h-11 rounded-xl bg-white text-zinc-900 hover:bg-zinc-100 hover:text-white"
               >
                 <Link to="/upload">Go to uploader</Link>
               </Button>
