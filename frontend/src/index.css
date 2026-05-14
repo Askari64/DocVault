@@ -118,6 +118,18 @@
   100% {
     transform: translateZ(0) rotate(360deg);
     }
+  }
+  --animate-shine: shine var(--duration) infinite linear;
+  @keyframes shine {
+  0% {
+    background-position: 0% 0%;
+    }
+  50% {
+    background-position: 100% 100%;
+    }
+  to {
+    background-position: 0% 0%;
+    }
   }}
 
 :root {
@@ -197,6 +209,27 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-sans;
+    @apply font-sans scroll-smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-gradient {
+    animation: none !important;
+  }
+  .motion-safe\:animate-shine,
+  .animate-shine {
+    animation: none !important;
+  }
+  .animate-marquee,
+  .animate-marquee-vertical {
+    animation: none !important;
+  }
+  .animate-shimmer-slide,
+  .animate-spin-around {
+    animation: none !important;
   }
 }
