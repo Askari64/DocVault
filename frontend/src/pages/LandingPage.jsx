@@ -17,6 +17,8 @@ import {
   productFeatures,
 } from "@/data/landingPageData.jsx";
 
+import Footer from "@/components/Footer";
+
 const heroLinkButtonClass =
   "inline-flex h-11 items-center justify-center rounded-xl border border-zinc-700 bg-transparent px-6 text-sm font-medium text-zinc-100 transition hover:bg-white/10 hover:text-white";
 
@@ -40,8 +42,13 @@ function LandingPage() {
               duration={18}
               shineColor={["#38bdf8", "#a78bfa", "#38bdf8"]}
             />
-            <Sparkles className="relative z-10 size-3.5 text-sky-400" aria-hidden />
-            <span className="relative z-10">Multi-tenant document sharing · private by default</span>
+            <Sparkles
+              className="relative z-10 size-3.5 text-sky-400"
+              aria-hidden
+            />
+            <span className="relative z-10">
+              Organizational document sharing · private by default
+            </span>
           </div>
 
           <h1 className="relative z-10 max-w-3xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl md:leading-[1.08]">
@@ -50,16 +57,18 @@ function LandingPage() {
               speed={1}
               colorFrom="#38bdf8"
               colorTo="#c084fc"
-              className="font-semibold motion-reduce:animate-none">
+              className="font-semibold motion-reduce:animate-none"
+            >
               orgs onboard
             </AnimatedGradientText>{" "}
             and teams keep files in one trusted vault
           </h1>
 
           <p className="relative z-10 mt-6 max-w-2xl text-pretty text-base text-zinc-400 sm:text-lg">
-            DocVault is a multi-tenant document sharing SaaS. Organizations come aboard through Clerk, members collaborate
-            inside their tenant, and every upload or download stays authenticated—no anonymous links, no accidental
-            leakage across org lines.
+            DocVault is a multi-tenant document sharing SaaS. Organizations come
+            aboard through Clerk, members collaborate inside their tenant, and
+            every upload or download stays authenticated—no anonymous links, no
+            accidental leakage across org lines.
           </p>
 
           <div className="relative z-10 mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -69,7 +78,8 @@ function LandingPage() {
                   type="button"
                   background="linear-gradient(135deg, #18181b 0%, #27272a 100%)"
                   shimmerColor="#e4e4e7"
-                  className="motion-reduce:animate-none h-11 px-8 text-sm font-semibold shadow-lg shadow-black/30">
+                  className="motion-reduce:animate-none h-11 px-8 text-sm font-semibold shadow-lg shadow-black/30"
+                >
                   Start for free
                 </ShimmerButton>
               </SignUpButton>
@@ -78,7 +88,8 @@ function LandingPage() {
               <Button
                 asChild
                 size="lg"
-                className="h-11 rounded-xl bg-white text-zinc-900 hover:bg-zinc-100">
+                className="h-11 rounded-xl bg-white text-zinc-900 hover:bg-zinc-100"
+              >
                 <Link to="/upload">Go to uploader</Link>
               </Button>
             </Show>
@@ -89,8 +100,11 @@ function LandingPage() {
               asChild
               variant="outline"
               size="lg"
-              className="h-11 rounded-xl border-zinc-700 bg-transparent text-zinc-100 hover:bg-white/10 hover:text-white">
-              <Link to={{ pathname: "/", hash: "features" }}>Explore features</Link>
+              className="h-11 rounded-xl border-zinc-700 bg-transparent text-zinc-100 hover:bg-white/10 hover:text-white"
+            >
+              <Link to={{ pathname: "/", hash: "features" }}>
+                Explore features
+              </Link>
             </Button>
           </div>
 
@@ -99,7 +113,8 @@ function LandingPage() {
               {marqueeItems.map((label) => (
                 <span
                   key={label}
-                  className="mx-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-400">
+                  className="mx-6 inline-flex items-center gap-2 text-sm font-medium text-zinc-400"
+                >
                   <span className="size-1.5 rounded-full bg-linear-to-r from-sky-400 to-violet-400" />
                   {label}
                 </span>
@@ -109,7 +124,10 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="features" className="scroll-mt-20 border-b bg-zinc-50 py-20 dark:bg-zinc-950">
+      <section
+        id="features"
+        className="scroll-mt-20 border-b bg-zinc-50 py-20 dark:bg-zinc-950"
+      >
         <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto mb-14 max-w-3xl text-center">
             <p className="text-sm font-medium uppercase tracking-widest text-violet-600 dark:text-violet-400">
@@ -122,31 +140,41 @@ function LandingPage() {
               </span>
             </h2>
             <p className="mt-3 text-pretty text-zinc-600 dark:text-zinc-400">
-              Whether you are running a consultancy with separate client orgs or a university cohort with isolated teams,
-              DocVault keeps uploads, browsing, and downloads scoped to the right people.
+              Whether you are running a consultancy with separate client orgs or
+              a university cohort with isolated teams, DocVault keeps uploads,
+              browsing, and downloads scoped to the right people.
             </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {productFeatures.map(({ icon: FeatureIcon, title, description }) => (
-              <div
-                key={title}
-                className="group rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm transition-transform duration-300 will-change-transform hover:-translate-y-0.5 dark:border-white/10 dark:bg-zinc-900/60 motion-reduce:transform-none">
-                <div className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-violet-500/10 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200">
-                  <FeatureIcon className="size-5" aria-hidden />
+            {productFeatures.map(
+              ({ icon: FeatureIcon, title, description }) => (
+                <div
+                  key={title}
+                  className="group rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm transition-transform duration-300 will-change-transform hover:-translate-y-0.5 dark:border-white/10 dark:bg-zinc-900/60 motion-reduce:transform-none"
+                >
+                  <div className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-violet-500/10 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200">
+                    <FeatureIcon className="size-5" aria-hidden />
+                  </div>
+                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    {description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
-              </div>
-            ))}
+              ),
+            )}
           </div>
 
           <div className="mt-20">
             <div className="mx-auto mb-10 max-w-2xl text-center">
-              <h3 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">How it comes together</h3>
+              <h3 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+                How it comes together
+              </h3>
               <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-                A bento layout highlighting the flows your evaluators care about—onboarding, sharing, uploads, and
-                privacy.
+                A bento layout highlighting the flows your evaluators care
+                about—onboarding, sharing, uploads, and privacy.
               </p>
             </div>
             <BentoGrid className="lg:auto-rows-[24rem]">
@@ -158,16 +186,22 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="pricing" className="scroll-mt-20 border-b bg-white py-24 dark:bg-zinc-950">
+      <section
+        id="pricing"
+        className="scroll-mt-20 border-b bg-white py-24 dark:bg-zinc-950"
+      >
         <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <p className="text-sm font-medium uppercase tracking-widest text-sky-600 dark:text-sky-400">Pricing</p>
+            <p className="text-sm font-medium uppercase tracking-widest text-sky-600 dark:text-sky-400">
+              Pricing
+            </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 md:text-4xl">
               Simple plans in USD
             </h2>
             <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              Start free, graduate when your org needs more seats, storage, and support. Numbers shown are placeholders for
-              your MCA billing story—wire them to Stripe or Clerk Billing when you are ready.
+              Start free, graduate when your org needs more seats, storage, and
+              support. Numbers shown are placeholders for your MCA billing
+              story—wire them to Stripe or Clerk Billing when you are ready.
             </p>
           </div>
 
@@ -179,7 +213,8 @@ function LandingPage() {
                   plan.highlighted
                     ? "border-transparent shadow-xl shadow-violet-500/10 ring-1 ring-violet-500/30"
                     : "border-zinc-200 dark:border-white/10"
-                }`}>
+                }`}
+              >
                 {plan.highlighted ? (
                   <ShineBorder
                     borderWidth={2}
@@ -193,7 +228,9 @@ function LandingPage() {
                       <p className="text-sm font-semibold uppercase tracking-wide text-violet-600 dark:text-violet-300">
                         {plan.name}
                       </p>
-                      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{plan.blurb}</p>
+                      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                        {plan.blurb}
+                      </p>
                     </div>
                     {plan.highlighted ? (
                       <span className="rounded-full bg-violet-600/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-violet-700 dark:text-violet-200">
@@ -205,7 +242,9 @@ function LandingPage() {
                     <span className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
                       {plan.priceLabel}
                     </span>
-                    <span className="pb-1 text-sm text-zinc-500">{plan.period}</span>
+                    <span className="pb-1 text-sm text-zinc-500">
+                      {plan.period}
+                    </span>
                   </div>
                   <ul className="mt-8 flex-1 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
                     {plan.features.map((item) => (
@@ -224,7 +263,8 @@ function LandingPage() {
                           plan.highlighted
                             ? "bg-violet-600 text-white hover:bg-violet-500"
                             : "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
-                        }`}>
+                        }`}
+                      >
                         {plan.cta}
                       </Button>
                     </SignUpButton>
@@ -253,8 +293,9 @@ function LandingPage() {
                 Bring your next organization on board today
               </h2>
               <p className="mt-3 text-zinc-400">
-                Authenticate with Clerk, pick the right org context, and move straight into uploads or your document
-                library. Guests never get a silent pass—membership is always enforced.
+                Sign in, pick the right org context, and move
+                straight into uploads or your document library. Guests never get
+                a silent pass—membership is always enforced.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
                 <Show when="signed-out">
@@ -264,7 +305,8 @@ function LandingPage() {
                       borderRadius="0.75rem"
                       background="linear-gradient(135deg, #fafafa 0%, #e4e4e7 100%)"
                       shimmerColor="#ffffff"
-                      className="motion-reduce:animate-none h-11 px-8 text-sm font-semibold text-zinc-900">
+                      className="motion-reduce:animate-none h-11 px-8 text-sm font-semibold text-zinc-900"
+                    >
                       Create your workspace
                     </ShimmerButton>
                   </SignUpButton>
@@ -274,13 +316,15 @@ function LandingPage() {
                     <Button
                       asChild
                       size="lg"
-                      className="h-11 rounded-xl bg-white text-zinc-900 hover:bg-zinc-100">
+                      className="h-11 rounded-xl bg-white text-zinc-900 hover:bg-zinc-100"
+                    >
                       <Link to="/documents">Open my documents</Link>
                     </Button>
                     <Button
                       asChild
                       variant="ghost"
-                      className="text-zinc-300 hover:bg-white/10 hover:text-white">
+                      className="text-zinc-300 hover:bg-white/10 hover:text-white"
+                    >
                       <Link to="/upload">Upload a file</Link>
                     </Button>
                   </>
@@ -291,14 +335,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-zinc-200 bg-white py-10 dark:border-zinc-800 dark:bg-zinc-950">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-sm text-zinc-500 sm:flex-row">
-          <p className="font-medium text-zinc-700 dark:text-zinc-300">DocVault</p>
-          <p className="text-center sm:text-left">
-            Multi-tenant document sharing for your MCA final semester project—orgs, teams, and privacy-first workflows.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

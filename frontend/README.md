@@ -7,16 +7,16 @@
 ### Installation
 
 ```bash
-# Clone repository
+### Clone repository
 git clone <your-repo-url>
 cd frontend
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Configure environment
+### Configure environment
 cp .env.example .env
-# Edit .env with your Clerk keys
+### Edit .env with your Clerk keys
 
-# Start development server
+### Start development server
 npm run dev
