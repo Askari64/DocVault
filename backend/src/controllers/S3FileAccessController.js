@@ -6,7 +6,6 @@ import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "../config/db.js";
 import { getAuth } from "@clerk/express";
-import { error } from "node:console";
 
 export const generateUploadUrl = async (req, res) => {
   try {
