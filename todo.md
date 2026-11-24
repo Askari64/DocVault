@@ -37,3 +37,4 @@
 - [x] Authorization Check: Only Admin and Uploader can delete. 
 - [] Add Version Control
 - [] Change bucket CORS policy later to live frontend url
+- [] Add document deletion when organization is deleted
